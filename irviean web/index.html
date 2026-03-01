@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Irviean Yoga | Creative Content Creator</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --accent: #00f5c4;
+            --accent-glow: rgba(0, 245, 196, 0.2);
+            --bg: #030303;
+            --card: #0d0d0d;
+            --text: #ffffff;
+            --text-dim: #94a3b8;
+            --font-main: 'Plus Jakarta Sans', sans-serif;
+            --transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: var(--font-main);
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Mouse Glow Follower */
+        #cursor-blur {
+            height: 400px; width: 400px;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+            position: fixed; top: 0; left: 0;
+            pointer-events: none; z-index: 1;
+            transform: translate(-50%, -50%);
+            transition: 0.1s linear;
+        }
+
+        /* Navigasi */
+        nav {
+            position: fixed; width: 100%; padding: 25px 8%;
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(3, 3, 3, 0.8); backdrop-filter: blur(20px);
+            z-index: 1000; border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .logo { font-weight: 800; font-size: 24px; color: var(--text); text-decoration: none; letter-spacing: -1.5px; }
+        .logo span { color: var(--accent); }
+        .nav-links a { color: var(--text-dim); text-decoration: none; margin-left: 35px; font-weight: 600; transition: var(--transition); font-size: 14px; }
+        .nav-links a:hover { color: var(--accent); }
+
+        /* Hero */
+        .hero {
+            padding: 180px 10% 100px;
+            display: grid; grid-template-columns: 1.2fr 0.8fr;
+            align-items: center; gap: 60px; min-height: 100vh;
+            position: relative; z-index: 2;
+        }
+
+        .hero-text h1 { font-size: clamp(40px, 6vw, 75px); font-weight: 800; letter-spacing: -3px; line-height: 1; margin-bottom: 25px; }
+        .hero-text p { color: var(--text-dim); font-size: 19px; max-width: 580px; margin-bottom: 45px; }
+        
+        .hero-img { position: relative; display: flex; justify-content: center; }
+        .hero-img img { 
+            width: 100%; max-width: 420px; border-radius: 40px; 
+            border: 1px solid rgba(255,255,255,0.1); transition: var(--transition);
+        }
+        .hero-img:hover img { border-color: var(--accent); transform: scale(1.02); }
+
+        .tag {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 8px 16px; background: rgba(0, 245, 196, 0.1);
+            color: var(--accent); border-radius: 50px; font-weight: 700;
+            font-size: 12px; margin-bottom: 20px; text-transform: uppercase;
+        }
+
+        /* Section Global */
+        section { padding: 120px 10%; position: relative; z-index: 2; }
+        .section-title { font-size: 40px; margin-bottom: 60px; font-weight: 800; letter-spacing: -1.5px; }
+        .section-title span { color: var(--accent); }
+
+        /* Experience Card */
+        .exp-grid { display: grid; gap: 30px; }
+        .exp-card {
+            background: var(--card); padding: 45px; border-radius: 35px;
+            border: 1px solid rgba(255,255,255,0.03); transition: var(--transition);
+        }
+        .exp-card:hover { transform: translateY(-10px); border-color: var(--accent); }
+        .exp-info h3 { font-size: 26px; margin-bottom: 5px; }
+        .exp-info h4 { color: var(--accent); font-weight: 600; margin-bottom: 10px; font-size: 17px; }
+        .exp-info span { color: var(--text-dim); font-size: 14px; display: block; margin-bottom: 20px; }
+
+        .cert-container { display: flex; justify-content: center; margin-top: 35px; }
+        .cert-img {
+            width: 100%; max-width: 480px; border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.08); transition: var(--transition);
+        }
+        .cert-img:hover { transform: scale(1.03); border-color: var(--accent); }
+
+        /* Skills Grid */
+        .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 25px; }
+        .skill-item {
+            background: var(--card); padding: 40px; border-radius: 30px;
+            text-align: center; border: 1px solid rgba(255,255,255,0.03); transition: var(--transition);
+        }
+        .skill-item:hover { border-color: var(--accent); background: #111; }
+        .skill-item i { font-size: 40px; color: var(--accent); margin-bottom: 25px; display: block; }
+        .skill-item h3 { margin-bottom: 15px; }
+        .skill-item p { font-size: 14px; color: var(--text-dim); }
+
+        /* Button */
+        .btn {
+            padding: 20px 40px; background: var(--accent); color: #000;
+            text-decoration: none; border-radius: 18px; font-weight: 800;
+            display: inline-block; transition: var(--transition);
+        }
+        .btn:hover { transform: scale(1.05); box-shadow: 0 0 40px var(--accent-glow); background: #fff; }
+
+        /* Footer */
+        footer { padding: 100px 10% 50px; background: #010101; text-align: center; border-top: 1px solid rgba(255,255,255,0.03); }
+        .socials { display: flex; justify-content: center; gap: 30px; margin-bottom: 40px; }
+        .socials a { color: var(--text-dim); font-size: 28px; transition: var(--transition); }
+        .socials a:hover { color: var(--accent); transform: translateY(-5px); }
+
+        /* Mobile */
+        @media (max-width: 900px) {
+            .hero { grid-template-columns: 1fr; text-align: center; padding-top: 140px; }
+            .hero-text p { margin: 20px auto 45px; }
+            .nav-links { display: none; }
+            #cursor-blur { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="cursor-blur"></div>
+
+    <nav>
+        <a href="#" class="logo">IRVIEAN YOGA MAHARDIKA<span>
+        <div class="nav-links">
+            <a href="#about">About</a>
+            <a href="#experience">Experience</a>
+            <a href="#skills">Skills</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-text" data-aos="fade-right">
+            <div class="tag"><i class="fas fa-video"></i> Content Creator Portfolio</div>
+            <h1>Visual Storyteller & <span style="color:var(--accent)">Creator.</span></h1>
+            <p>
+                Halo! Saya Irviean Yoga Mahardika, mahasiswa Teknologi Rekayasa Multimedia (D4) di Polimedia. 
+                Fokus pada strategi konten digital, video editing di CapCut, dan visual branding menggunakan Canva.
+            </p>
+            <a href="#contact" class="btn">Start a Project</a>
+        </div>
+        <div class="hero-img" data-aos="zoom-in" data-aos-delay="200">
+            <img src="img/WhatsApp Image 2026-03-01 at 18.57.45.jpeg" alt="Irviean Photo Profile">
+        </div>
+    </header>
+
+    <section id="about" data-aos="fade-up">
+        <h2 class="section-title">Professional <span>Summary</span></h2>
+        <p style="color: var(--text-dim); font-size: 19px; max-width: 850px;">
+            Sebagai mahasiswa desain multimedia, saya menguasai ekosistem konten digital secara menyeluruh. Saya ahli dalam memproduksi visual di Canva dan mengedit video di CapCut dengan pendekatan berbasis tren. Pengalaman kepemimpinan saya di organisasi memperkuat kemampuan saya dalam manajemen tim kreatif dan komunikasi strategi konten.
+        </p>
+    </section>
+
+    <section id="experience">
+        <h2 class="section-title" data-aos="fade-right">Selected <span>Experience</span></h2>
+        <div class="exp-grid">
+            
+            <div class="exp-card" data-aos="fade-up">
+                <div class="exp-info">
+                    <h4>HIMEDIA Polimedia</h4>
+                    <h3>Ketua Divisi Hubungan Masyarakat</h3>
+                    <span>2025 - Present</span>
+                    <p>Memimpin strategi komunikasi organisasi, mengelola kolaborasi antar lembaga, dan meningkatkan engagement eksternal Himpunan Mahasiswa Multimedia.</p>
+                </div>
+            </div>
+
+            <div class="exp-card" data-aos="fade-up">
+                <div class="exp-info">
+                    <h4>AMUBA 12 (Aksi Multimedia Berbagi)</h4>
+                    <h3>Ketua Divisi Logistik</h3>
+                    <span>HIMEDIA Polimedia</span>
+                    <p>Mengelola rantai pasok kebutuhan operasional untuk kegiatan sosial panti asuhan. Berhasil memastikan distribusi logistik tepat sasaran melalui koordinasi tim yang efisien.</p>
+                    <div class="cert-container">
+                        <img src="img/Cuplikan layar 2026-03-01 192547.png" class="cert-img" alt="Sertifikat AMUBA">
+                    </div>
+                </div>
+            </div>
+
+            <div class="exp-card" data-aos="fade-up">
+                <div class="exp-info">
+                    <h4>MAX 1.0 (Digital Arts Exhibition)</h4>
+                    <h3>Tim Logistik & Perlengkapan</h3>
+                    <span>HIMEDIA Polimedia</span>
+                    <p>Bertanggung jawab atas infrastruktur pameran seni digital tingkat program studi, memastikan kebutuhan teknis peserta terpenuhi untuk kelancaran acara.</p>
+                    <div class="cert-container">
+                        <img src="img/1757129998596.jpeg" class="cert-img" alt="Sertifikat MAX">
+                    </div>
+                </div>
+            </div>
+
+            <div class="exp-card" data-aos="fade-up">
+                <div class="exp-info">
+                    <h4>Divisi Pendataan Imedia 2025</h4>
+                    <h3>Pendataan</h3>
+                    <span>HIMEDIA Polimedia</span>
+                    <p>Bertanggung jawab dalam pengumpulan, pengolahan, dan verifikasi data mahasiswa baru serta data panitia. Melalui pengalaman ini, saya mengasah kemampuan administrasi, ketelitian, serta koordinasi tim dalam memastikan seluruh data yang dibutuhkan tercatat dengan baik dan terorganisir.</p>
+                    <div class="cert-container">
+                        <img src="img/Cuplikan layar 2026-03-01 192504.png" class="cert-img" alt="Sertifikat MAX">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="skills" data-aos="fade-up">
+        <h2 class="section-title">Core <span>Expertise</span></h2>
+        <div class="skills-grid">
+            <div class="skill-item">
+                <i class="fas fa-clapperboard"></i>
+                <h3>Video Editing</h3>
+                <p>Spesialis CapCut untuk konten berdurasi pendek (TikTok/Reels) dengan fokus pada hook dan storytelling.</p>
+            </div>
+            <div class="skill-item">
+                <i class="fas fa-camera"></i>
+                <h3>Cinematography</h3>
+                <p>Mampu melakukan pengambilan gambar dan video dengan komposisi yang baik untuk berbagai kebutuhan produksi konten.</p>
+            </div>
+            <div class="skill-item">
+                <i class="fas fa-chart-line"></i>
+                <h3>Trend Analysis</h3>
+                <p>Menganalisis algoritma sosial media untuk merancang ide konten yang relevan dengan audiens target.</p>
+            </div>
+            <div class="skill-item">
+                <i class="fas fa-wand-magic-sparkles"></i>
+                <h3>Visual Design</h3>
+                <p>Pembuatan aset visual branding dan desain konten kreatif menggunakan Canva profesional.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" data-aos="zoom-out">
+        <div style="background: var(--card); padding: 80px 40px; border-radius: 40px; text-align: center; border: 1px solid rgba(255,255,255,0.05);">
+            <h2 style="font-size: 36px; margin-bottom: 20px;">Ready to Collaborate?</h2>
+            <p style="color: var(--text-dim); margin-bottom: 40px;">Bawa visi kreatif brand Anda menjadi nyata bersama saya.</p>
+            <a href="mailto:yogam3091@gmail.com" class="btn">Kirim Email Sekarang</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="socials">
+            <a href="https://www.linkedin.com/in/irviean-yoga-mahardika-3698bb34b/" target="_blank"><i class="fab fa-linkedin"></i></a>
+            <a href="https://www.instagram.com/irvieann_/" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://github.com/Irviean" target="_blank"><i class="fab fa-github"></i></a>
+        </div>
+        <p style="font-size: 14px; color: var(--text-dim);">© 2026 Irviean Yoga Mahardika</p>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Animasi AOS
+        AOS.init({ duration: 1000, once: true, offset: 100 });
+
+        // Mouse Glow
+        const blur = document.getElementById('cursor-blur');
+        document.addEventListener('mousemove', e => {
+            blur.style.left = e.clientX + 'px';
+            blur.style.top = e.clientY + 'px';
+        });
+    </script>
+</body>
+</html>
